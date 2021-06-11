@@ -12,12 +12,12 @@
         Add Product Page
         <div style="margin-left:10%;">
             <br><br><br><br>
-            <input type="text" placeholder="collections to add to" id="collections" /><br><br>
             <input type="text" placeholder="Product Code" id="code" /><br><br>
             <input type="text" placeholder="Product Name" id="name" /><br><br>
             <input type="text" placeholder="a1" id="a1" /><br><br>
             <input type="text" placeholder="a2" id="a2" /><br><br>
             <input type="text" placeholder="imgSrc" id="imgSrc" /><br><br>
+            <button id='addNotebooks' >Add to Notebooks</button>
         </div>
 
         <script>
@@ -32,11 +32,40 @@
             };
             firebase.initializeApp(config);
             const db = firebase.firestore();
+
+
+
+            const code = document.getElementById('code');
+            const name = document.getElementById('name');
+            const a1 = document.getElementById('a1');
+            const a2 = document.getElementById('a2');
+            const imgSrc = document.getElementById('imgSrc');
+            const addNotebooks = document.getElementById('addNotebooks');
             
 
-            var collections = document.getElementById('collections').value;
-            // var productToAdd = db.collection('radio1');
-            console.log(collections);
+            const data = {
+              Name: name,
+              Code: document.getElementById('code').value,
+              a: a1,
+              a2: a2,
+              imgSrc: imgSrc
+            };
+
+            addNotebooks.addEventListener("click" , function(){
+                db.collection("notebooks").doc(code.value).set({
+                  Name: name.value,
+                  Code: code.value,
+                  a: a1.value,
+                  a2: a2.value,
+                  imgSrc: imgSrc.value
+                })
+                .then(() => {
+                    console.log("Document successfully written!");
+                })
+                .catch((error) => {
+                    console.error("Error writing document: ", error);
+                });
+            })
             
 
 

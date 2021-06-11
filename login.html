@@ -3,11 +3,15 @@
   <title>Firebase Login</title>
   <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
   <link rel="stylesheet" href="login.css" />
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
 </head>
 <body>
 
   <div id="login_div" class="main-div">
-    <h3>Firebase Web login Example</h3>
+    <h3>Login to Admin</h3>
     <input type="email" placeholder="Email..." id="email_field" />
     <input type="password" placeholder="Password..." id="password_field" />
 
@@ -15,16 +19,23 @@
   </div>
 
   <div id="user_div" class="loggedin-div">
-    <h3>Welcome User</h3>
-    <p id="user_para">Welcome to Firebase web login Example. You're currently logged in.</p>
+    <br><br><br><br>
+            <input type="text" placeholder="Product Code" id="code" /><br><br>
+            <input type="text" placeholder="Product Name" id="name" /><br><br>
+            <input type="text" placeholder="a1" id="a1" /><br><br>
+            <input type="text" placeholder="a2" id="a2" /><br><br>
+            <!-- <input type="text" placeholder="imgSrc" id="imgSrc" /><br><br> -->
+            <input type="file" id='fileButton'/><br><br>
+            <button id='addNotebooks' >Add to Notebooks</button>
+
+            <br><br><br><br><br>
     <button onclick="logout()">Logout</button>
   </div>
 
 
 
-  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+  <!-- <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script> -->
   <script>
-    // Initialize Firebase
     var config = {
       apiKey: "AIzaSyAby9DxUE27mhnpodFtoObx0u0488GEeQY",
       authDomain: "corp-391f7.firebaseapp.com",
@@ -35,7 +46,54 @@
       measurementId: "G-KT27TYPPZJ"
     };
     firebase.initializeApp(config);
-  </script>
+    const db = firebase.firestore();
+    const code = document.getElementById('code');
+    const name = document.getElementById('name');
+    const a1 = document.getElementById('a1');
+    const a2 = document.getElementById('a2');
+    const imgSrc = document.getElementById('imgSrc');
+    const addNotebooks = document.getElementById('addNotebooks');
+    const fileSelector = document.getElementById('fileButton');
+    var fileUrl;
+
+
+
+    addNotebooks.addEventListener("click" , function(){
+
+
+        db.collection("notebooks").doc(code.value).set({
+          Name: name.value,
+          Code: code.value,
+          a: a1.value,
+          a2: a2.value,
+          imgSrc: fileUrl
+        })
+        .then(() => {
+            console.log("Document successfully written!");
+            console.log(fileUrl);
+            alert("Document successfully written!");
+            name.value = '';
+            code.value = '';
+            a1.value = '';
+            a2.value = '';
+            fileSelector.value = '';
+
+        })
+        .catch((error) => {
+            console.error("Error writing document: ", error);
+        });
+      })
+    
+      
+        fileSelector.addEventListener('change', async(event) => {
+          const file = event.target.files[0];
+          const storageRef = firebase.storage().ref();
+          const fileRef = storageRef.child(file.name);
+          console.log("Uploaded File Url" , fileUrl);
+          await fileRef.put(file)
+          fileUrl = await fileRef.getDownloadURL();
+        });
+    </script>
   <script src="login.js"></script>
 
 </body>
