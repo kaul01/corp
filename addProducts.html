@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Notebooks | Products | Corp 86 | One stop destination for corporate gifts</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+    </head>
+
+    <body>
+        Add Product Page
+        <div style="margin-left:10%;">
+            <br><br><br><br>
+            <input type="text" placeholder="collections to add to" id="collections" /><br><br>
+            <input type="text" placeholder="Product Code" id="code" /><br><br>
+            <input type="text" placeholder="Product Name" id="name" /><br><br>
+            <input type="text" placeholder="a1" id="a1" /><br><br>
+            <input type="text" placeholder="a2" id="a2" /><br><br>
+            <input type="text" placeholder="imgSrc" id="imgSrc" /><br><br>
+        </div>
+
+        <script>
+            var config = {
+              apiKey: "AIzaSyAby9DxUE27mhnpodFtoObx0u0488GEeQY",
+              authDomain: "corp-391f7.firebaseapp.com",
+              projectId: "corp-391f7",
+              storageBucket: "corp-391f7.appspot.com",
+              messagingSenderId: "452489581021",
+              appId: "1:452489581021:web:49e1e5b246486077b16634",
+              measurementId: "G-KT27TYPPZJ"
+            };
+            firebase.initializeApp(config);
+            const db = firebase.firestore();
+            
+
+            var collections = document.getElementById('collections').value;
+            // var productToAdd = db.collection('radio1');
+            console.log(collections);
+            
+
+
+
+
+
+
+
+          </script>
+    </body>
+
+    </html>
